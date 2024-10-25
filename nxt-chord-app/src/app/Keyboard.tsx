@@ -1,16 +1,13 @@
 'use client'
 
 import { useState } from "react";
-import type { NoteSet } from "./Chord";
-import * as Tone from "tone";
+import { synth, type NoteSet } from "./Chord";
 
 interface KeyboardSvgProps {
 	chord: NoteSet
 	playOffset: number
 	handleChord?: (chord: NoteSet) => void
 }
-
-const synth = new Tone.PolySynth(Tone.Synth).toDestination();
 
 export const KeyboardSvg = ({ chord, playOffset, handleChord }: KeyboardSvgProps) => {
 

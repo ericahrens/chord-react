@@ -1,4 +1,9 @@
+import * as Tone from "tone";
+
+
 export const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+export const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+
 
 export class NoteSet {
     name: string
@@ -55,6 +60,10 @@ export class NoteSet {
             }
         }
         return true
+    }
+
+    playChord = (start: number, duration: number, playOffset: number) => {
+        synth.triggerAttackRelease(this.getNotes(playOffset), duration, start);
     }
 }
 

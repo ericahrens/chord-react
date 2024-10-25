@@ -4,6 +4,7 @@ import { type NoteSet, scales, deriveNoteSet, getScale, notes, getMatchingChords
 import { useEffect, useState } from "react";
 import { ChordDisplay } from "./Keyboard";
 import { ChordSeq } from "./ChordSeq";
+import * as Tone from "tone";
 
 
 interface ComboBoxProps {
@@ -61,6 +62,19 @@ export default function Home() {
     setChordList(newSeq)
   }
 
+  const playSequence = () => {
+    const dur = 1
+    let pos = Tone.now()
+    for (const chord of chordList) {
+      chord.playChord(pos, dur*0.9, playOffset)
+      pos += dur
+    }
+  }
+
+  const clearSequence = () => {
+    setChordList([])
+  }
+
   useEffect(() => {
     console.log(`chord list = ${chordList}`)
   }, [chordList])
@@ -88,6 +102,10 @@ export default function Home() {
       </div>
       <div>
         <b>{repScale.getName()}</b> {repScale.listNotes()}
+      </div>
+      <div>
+        <button type="button" onClick={playSequence}>Play</button>
+        <button type="button" onClick={clearSequence}>Clear</button>
       </div>
       <ChordSeq chordList={chordList} />
       <div className="center-box">
